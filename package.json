@@ -1,0 +1,14 @@
+{
+  "name": "crab-css",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --config playground/vite.config.js"
+  },
+  "dependencies": {
+    "vue": "^3.2.16"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.3",
+    "vite": "^2.6.4"
+  }
+}
