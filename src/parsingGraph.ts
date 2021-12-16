@@ -17,6 +17,22 @@ interface ParsingGraph {
 export type GraphRefProxy = ProxyHandler<ParsingGraphReturn["getGraphRef"]>;
 
 const parsingGraph: ParsingGraph = () => {
+    /**
+     *  pd_30 : 'padding:30px',
+     *  mt_10 : 'margint-top:10px'
+     *
+     * //全局自定义組合
+     * apply_idCard : {
+     *      pd_10:'padding:10px',
+     *      mt_10:'margint-top:10px'
+     * }
+     *
+     * //模块组合 不能模块与模块之间组合
+     * goods_layout:{
+     *       pd_12:'padding:12px',
+     *      mt_12:'margint-top:12px'
+     * }
+     */
     const mapGraph: ParsingMapTree = {};
     const mapRef = shallowRef(mapGraph)
 
