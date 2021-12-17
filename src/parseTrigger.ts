@@ -8,26 +8,30 @@
  *
  */
 
-import { RegisterParse } from "./module";
-import { ParsingGraphReturn } from "./parsingGraph";
+import { isCustomChunk, isCustomParse, isString } from "./shared";
+import { GetRef } from "./parsingGraph";
+import { CustomChunk, CustomParse, RegisterParse } from "./types";
+import { useConfig } from "./config";
 
-type ConverToGraphValue = (
-    registerKey: string,
-    registerValue:  RegisterParse["value"],
-    getRef: () => ReturnType<ParsingGraphReturn["getGraphRef"]>
-) => any;
 
 export const parseTrigger = (triggerKey: string) => {
     const _s = triggerKey.split("_");
     return [_s[0], _s.slice(1).join("_")].filter(v => v);
 }
 
-
-
-export const converToGraphValue: ConverToGraphValue = (registerKey, registerValue, getRef) => {
-
-    if(typeof registerValue !=="string"){
-        registerValue.cssKey
+export function converToGraphValue(registerKey: string, registerValue: string, triggerValue: string, getRef: GetRef): any;
+export function converToGraphValue(registerKey: string, registerValue: CustomParse, triggerValue: string, getRef: GetRef): any;
+export function converToGraphValue(registerKey: string, registerValue: CustomChunk, triggerValue: string, getRef: GetRef): any;
+export function converToGraphValue(registerKey: string, registerValue: RegisterParse["value"], triggerValue: string, getRef: GetRef): any;
+export function converToGraphValue(registerKey: string, registerValue: any, triggerValue: string, getRef: GetRef): any {
+    const config = useConfig();
+    if (isString(registerValue)) {
+        return { [registerValue]: `${triggerValue}${config.unit}` };
+    } else if (isCustomParse(registerValue)) {
+        // registerValue.cssKey
+    } else if (isCustomChunk(registerValue)) {
+        const v =  registerValue.chunk(getRef())
+        console.log(v,"xxxx");
+         return {"1":"2"}
     }
-
 }

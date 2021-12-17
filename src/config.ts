@@ -1,10 +1,13 @@
+import { Register } from "./module";
+
 interface Config {
     unit: string;
     prefix: string;
     globalModuleKey: string;
+    register?:Register
     _skip: boolean
 }
-type userConfig = Partial<Pick<Config, "_skip">>;
+type userConfig = Partial<Omit<Config, "_skip">>;
 
 const config_: Config = {
     unit: "px",

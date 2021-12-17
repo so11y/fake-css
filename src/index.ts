@@ -19,6 +19,10 @@ export const crabCSS = () => {
                 .register("pl", "padding-left")
                 .register("w", "width")
                 .register("h", "height")
+
+            if (config.register) {
+                config.register(register)
+            }
         }
     });
 

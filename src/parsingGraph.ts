@@ -2,16 +2,18 @@ import { shallowReactive, toRaw, ShallowReactive } from "vue";
 import { isString } from "./shared";
 import { ParsingMapTree, ParsingMapTreeValue } from "./types";
 
-export  interface ParsingGraphReturn {
+export type GetRef = () => ShallowReactive<ParsingMapTree>;
+
+export interface ParsingGraphReturn {
     addParsingMapItem: (key: string, value: string) => void,
     removeParsingMapItem: (key: string) => void,
-    getGraphRef: () => ShallowReactive<ParsingMapTree>,
+    getGraphRef: GetRef,
     setParsingMapItem: (this: ParsingGraphReturn, key: string) => void
 }
 
 interface ProxyGraph {
     (parseCallBack: Function): {
-        getRef: () => ReturnType<ParsingGraphReturn["getGraphRef"]>,
+        getRef: GetRef,
         proxy: () => ProxyHandler<ParsingMapTree>
     }
 }
@@ -37,28 +39,30 @@ const parsingGraph: ParsingGraph = () => {
      *      mt_12:'margint-top:12px'
      * }
      */
-    const mapGraph = new Map<string, ParsingMapTreeValue>();
-    const mapRef = shallowReactive(Object.fromEntries(mapGraph))
+    const mapGraph = {};
+    const mapRef = shallowReactive(mapGraph)
 
     return {
         addParsingMapItem(key: string, value: ParsingMapTreeValue) {
-            mapGraph.set(key, value);
+            // mapGraph.set(key, value);
+            Reflect.set(mapGraph, key, value)
         },
         removeParsingMapItem(key: string) {
-            mapGraph.delete(key);
+            // mapGraph.delete(key);
+            Reflect.deleteProperty(mapGraph, key)
         },
         getGraphRef() {
             return mapRef
         },
         setParsingMapItem(key: string) {
-            if (mapGraph.has(key)) {
+            if (Reflect.has(mapGraph, key)) {
                 // this.
             }
         }
     }
 }
 
-export const proxyGraph: ProxyGraph = (parseTrigger:Function ) => {
+export const proxyGraph: ProxyGraph = (parseTrigger: Function) => {
     const parsingGraph_ = parsingGraph();
     const mapRef = parsingGraph_.getGraphRef();
     const rowMapRef = toRaw(mapRef) as ParsingMapTree;
@@ -67,7 +71,12 @@ export const proxyGraph: ProxyGraph = (parseTrigger:Function ) => {
             if (!key || !isString(key)) return;
             //先在自己的Graph模块上找
             if (!Reflect.has(mapRef, key)) {
-                parseTrigger(key,)
+                const [converKey, converValue] = parseTrigger(key)
+
+                if (converKey && converValue) {
+                    parsingGraph_.addParsingMapItem(converKey, converValue)
+                }
+
                 //     parseCss(key);
                 //     // const _JITCSS = parseCSS(key, proxyCSS);
                 //     // Reflect.set(target, key, _JITCSS);

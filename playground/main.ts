@@ -1,9 +1,9 @@
-import { createApp} from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-import {crabCSS} from "../src/index"
+import { crabCSS, useConfig } from "../src/carbCss"
 
 
-const app =  createApp(App)
+const app = createApp(App)
 
 
 
@@ -23,10 +23,24 @@ const app =  createApp(App)
 // console.log(useConfig());
 // app.use(JIT,useClassParse);
 // app.use(JIT,useStyleParse);
+
+useConfig({
+    register(r) {
+        r.register("apply_good", {
+            chunk(ref) {
+                return [
+                    ref.pd_10,
+                    ref.pl_77
+                ]
+            }
+        })
+    }
+})
 app.use(crabCSS());
 app.mount('#app')
 
-console.log(app.config.globalProperties.Style.pt_30);
+// console.log(app.config.globalProperties.Style.pt_30);
+console.log(app.config.globalProperties.Style.apply_good);
 // console.log(app.config.globalProperties.Style.goods_layout);
 // .zz;
 
