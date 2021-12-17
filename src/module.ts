@@ -51,6 +51,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 
                 if (parsingValue) {
                     //这里不想在写类型了啊,还要在给这个callback定义类型，在返回一个元组
+                    //这里getref要改掉,传错了,要传proxy
                     return [triggerKey, converToGraphValue(triggerKey, parsingValue!, triggerValue, getRef)];
                 }
 
