@@ -1,6 +1,7 @@
 interface Config {
     unit: string;
     prefix: string;
+    globalModuleKey: string;
     _skip: boolean
 }
 type userConfig = Partial<Pick<Config, "_skip">>;
@@ -8,6 +9,7 @@ type userConfig = Partial<Pick<Config, "_skip">>;
 const config_: Config = {
     unit: "px",
     prefix: "apply",
+    globalModuleKey: "global",
     _skip: false
 }
 

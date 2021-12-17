@@ -1,3 +1,4 @@
 export type ParsingMapModule = Record<string, string>;
-export type ParsingMapTree = Record<string, string | ParsingMapModule>;
+export type ParsingMapTreeValue = string | ParsingMapModule;
+export type ParsingMapTree = Record<string, ParsingMapTreeValue>;
 

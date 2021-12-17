@@ -1,8 +1,7 @@
 import { createApp} from 'vue'
 import App from './App.vue'
-import {good} from "../src/index"
+import {crabCSS} from "../src/index"
 
-console.log(good,"good");
 
 const app =  createApp(App)
 
@@ -24,7 +23,12 @@ const app =  createApp(App)
 // console.log(useConfig());
 // app.use(JIT,useClassParse);
 // app.use(JIT,useStyleParse);
+app.use(crabCSS());
 app.mount('#app')
+
+console.log(app.config.globalProperties.Style.pt_30);
+// console.log(app.config.globalProperties.Style.goods_layout);
+// .zz;
 
 
 
