@@ -11,3 +11,7 @@ export const isCustomParse = (key: any): key is CustomParse => {
 export const isCustomChunk = (key: any): key is CustomChunk => {
     return !key.cssKey && key.chunk;
 }
+
+export const toRawMapTree = <T extends {_toRaw?:any}>(key: T): T => {
+    return key._toRaw
+}

@@ -3,6 +3,7 @@ import { isString } from "./shared";
 import { ParsingMapTree, ParsingMapTreeValue } from "./types";
 
 export type GetRef = () => ShallowReactive<ParsingMapTree>;
+export type GetProxy = () => ProxyHandler<ParsingMapTree>
 
 export interface ParsingGraphReturn {
     addParsingMapItem: (key: string, value: string) => void,
@@ -14,7 +15,7 @@ export interface ParsingGraphReturn {
 interface ProxyGraph {
     (parseCallBack: Function): {
         getRef: GetRef,
-        proxy: () => ProxyHandler<ParsingMapTree>
+        proxy: GetProxy
     }
 }
 
@@ -69,22 +70,17 @@ export const proxyGraph: ProxyGraph = (parseTrigger: Function) => {
     const proxy = new Proxy(rowMapRef, {
         get(_, key) {
             if (!key || !isString(key)) return;
+            if (key === "_toRaw") return rowMapRef;
             //先在自己的Graph模块上找
             if (!Reflect.has(mapRef, key)) {
                 const [converKey, converValue] = parseTrigger(key)
 
                 if (converKey && converValue) {
-                    parsingGraph_.addParsingMapItem(converKey, converValue)
+                    parsingGraph_.addParsingMapItem(key, converValue)
                 }
-
-                //     parseCss(key);
-                //     // const _JITCSS = parseCSS(key, proxyCSS);
-                //     // Reflect.set(target, key, _JITCSS);
-                //     // return _JITCSS;
             }
-            //这边也不是直接get,而是在这里进行转换
-            //根据传入类型,决定是class转换还是style转换
-            // return Reflect.get(target, key);
+            //在这里可以直接返回,不同类型,另外在proxy代理转换
+            return Reflect.get(_, key);
         }
     })
     return {

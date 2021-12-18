@@ -2,6 +2,7 @@ import { ParsingMapTree, RegisterParse } from "./types";
 import { proxyGraph } from "./parsingGraph";
 import { converToGraphValue, parseTrigger } from "./parseTrigger";
 import { useConfig } from "./config";
+import { isString, toRawMapTree } from "./shared";
 
 export type Register = (registers: ReturnType<typeof register>) => void;
 
@@ -22,14 +23,16 @@ const register = (map: Map<string, RegisterParse["value"]>) => {
 
 const mapModule = new Map<string, ParsingMapTree>();
 
+export const getRegisterModule = () => Object.fromEntries(mapModule);
+
 export const defineModule = (moduleId: string, define: RegisterSetUp) => {
     const parsingRegisterMap = new Map<string, RegisterParse["value"]>();
     define.setup(register(parsingRegisterMap));
 
-    return (converParse?: Function) => {
+    return () => {
         if (!mapModule.has(moduleId)) {
             const { globalModuleKey, prefix } = useConfig();
-            const { proxy, getRef } = proxyGraph((key: string) => {
+            const { proxy } = proxyGraph((key: string) => {
                 let [triggerKey, triggerValue] = parseTrigger(key);
 
                 //如果是apply开头,直接使用key
@@ -50,16 +53,24 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
                 }
 
                 if (parsingValue) {
-                    //这里不想在写类型了啊,还要在给这个callback定义类型，在返回一个元组
-                    //这里getref要改掉,传错了,要传proxy
-                    return [triggerKey, converToGraphValue(triggerKey, parsingValue!, triggerValue, getRef)];
+                    //这里不想在写类型了,还要在给这个callback定义类型，在返回一个元组
+                    return [triggerKey, converToGraphValue(triggerKey, parsingValue!, triggerValue, proxy)];
                 }
 
-                console.warn(`no find Register can parsing key ${triggerKey} , value ${triggerValue}`)
+                return console.error(`no find Register can parsing key ${triggerKey} , value ${triggerValue}`)
             })
             mapModule.set(moduleId, proxy() as ParsingMapTree)
         }
-        return mapModule.get(moduleId);
+
+        const refCss = mapModule.get(moduleId)!
+
+        return new Proxy(toRawMapTree(refCss), {
+            get(_, key) {
+                if (!key || !isString(key)) return;
+                //在这里进行转换
+                return refCss[key];
+            }
+        })
     }
 }
 

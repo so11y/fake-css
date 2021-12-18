@@ -1,4 +1,3 @@
-import { ShallowReactive } from "vue";
 
 export type ParsingMapModule = Record<string, string>;
 export type ParsingMapTreeValue = string | ParsingMapModule;
@@ -9,7 +8,7 @@ export type CustomParse = {
     parse: (style: string) => string,
 }
 export type CustomChunk = {
-    chunk:(cssProxy: ShallowReactive<ParsingMapTree>) => Array<any>
+    chunk:(cssProxy:any) => Array<any>
 }
 
 export interface RegisterParse {

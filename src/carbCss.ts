@@ -1,3 +1,3 @@
 export { crabCSS } from "./index"
 export { useConfig } from "./config"
-export { defineModule } from "./module"
+export { defineModule,getRegisterModule } from "./module"

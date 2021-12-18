@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { crabCSS, useConfig } from "../src/carbCss"
+import { crabCSS, useConfig ,getRegisterModule} from "../src/carbCss"
 
 
 const app = createApp(App)
@@ -29,14 +29,15 @@ useConfig({
         r.register("apply_good", {
             chunk(ref) {
                 return [
-                    ref.pd_10,
+                    ref.pb_10,
                     ref.pl_77
-                ]
+                ];
             }
         })
     }
 })
 app.use(crabCSS());
+console.log(getRegisterModule());
 app.mount('#app')
 
 // console.log(app.config.globalProperties.Style.pt_30);

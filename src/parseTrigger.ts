@@ -9,7 +9,7 @@
  */
 
 import { isCustomChunk, isCustomParse, isString } from "./shared";
-import { GetRef } from "./parsingGraph";
+import { GetProxy } from "./parsingGraph";
 import { CustomChunk, CustomParse, RegisterParse } from "./types";
 import { useConfig } from "./config";
 
@@ -18,20 +18,28 @@ export const parseTrigger = (triggerKey: string) => {
     const _s = triggerKey.split("_");
     return [_s[0], _s.slice(1).join("_")].filter(v => v);
 }
+export const parseChunk = (chunk: Array<{}>) => {
+    let chunkStyles = {};
+    chunk.forEach(v => {
+        chunkStyles = {
+            ...chunkStyles,
+            ...v
+        }
+    })
+    return chunkStyles;
+}
 
-export function converToGraphValue(registerKey: string, registerValue: string, triggerValue: string, getRef: GetRef): any;
-export function converToGraphValue(registerKey: string, registerValue: CustomParse, triggerValue: string, getRef: GetRef): any;
-export function converToGraphValue(registerKey: string, registerValue: CustomChunk, triggerValue: string, getRef: GetRef): any;
-export function converToGraphValue(registerKey: string, registerValue: RegisterParse["value"], triggerValue: string, getRef: GetRef): any;
-export function converToGraphValue(registerKey: string, registerValue: any, triggerValue: string, getRef: GetRef): any {
+export function converToGraphValue(registerKey: string, registerValue: string, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(registerKey: string, registerValue: CustomParse, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(registerKey: string, registerValue: CustomChunk, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(registerKey: string, registerValue: RegisterParse["value"], triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(registerKey: string, registerValue: any, triggerValue: string, getProxy: GetProxy): any {
     const config = useConfig();
     if (isString(registerValue)) {
         return { [registerValue]: `${triggerValue}${config.unit}` };
     } else if (isCustomParse(registerValue)) {
         // registerValue.cssKey
     } else if (isCustomChunk(registerValue)) {
-        const v =  registerValue.chunk(getRef())
-        console.log(v,"xxxx");
-         return {"1":"2"}
+        return parseChunk(registerValue.chunk(getProxy()))
     }
 }
