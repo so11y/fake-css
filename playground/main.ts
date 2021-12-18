@@ -36,6 +36,7 @@ const [useGoodsClass, useGoodsStyle] = defineModule("goods", {
     }
 })
 console.log(useGoodsClass().pt_30);
+console.log(useGoodsClass().goods_layout);
 // console.log(useGoodsStyle().goods_layout);
 // console.log(useGoodsStyle().goods_layout);
 // console.log(useGoodsStyle().pt_11);

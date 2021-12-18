@@ -13,8 +13,8 @@ import { GetProxy } from "./parsingGraph";
 import { CustomChunk, CustomParse, ParsingMapModule, RegisterParse } from "./types";
 import { useConfig } from "./config";
 
-const converToClass = () => {
-
+const genClassToString = (v: ParsingMapModule) => {
+    // return JSON.stringify(v).replaceAll(",", ";");
 }
 
 export const converTo = {
@@ -23,9 +23,11 @@ export const converTo = {
             const startWithClassName = (v as CSSStyleRule).selectorText;
             return startWithClassName === `.${key}`;
         })
-        if (!isHave) {
-
-            // sheet.insertRule();
+        console.log(isHave);
+        if (isHave === -1) {
+            const classRule = genClassToString(v);
+            console.log(`.${key}${classRule}`,"classRule");
+            // sheet.insertRule(`.${key}${classRule}`);
         }
         return `.${key}`;
     },
