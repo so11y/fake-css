@@ -1,15 +1,15 @@
-import { ParsingMapTree, RegisterParse } from "./types";
+import { ParsingMapModule, ParsingMapTree, ParsingMapTreeValue, RegisterParse } from "./types";
 import { proxyGraph } from "./parsingGraph";
-import { converToGraphValue, parseTrigger } from "./parseTrigger";
+import { converTo, converToGraphValue, parseTrigger } from "./parseTrigger";
 import { useConfig } from "./config";
 import { isString, toRawMapTree } from "./shared";
 
 export type Register = (registers: ReturnType<typeof register>) => void;
 
 export type RegisterSetUp = {
+    conver: "class" | "style";
     setup: Register
 }
-
 
 const register = (map: Map<string, RegisterParse["value"]>) => {
     return {
@@ -20,8 +20,7 @@ const register = (map: Map<string, RegisterParse["value"]>) => {
     }
 }
 
-
-const mapModule = new Map<string, ParsingMapTree>();
+const mapModule = new Map<string, ParsingMapTreeValue>();
 
 export const getRegisterModule = () => Object.fromEntries(mapModule);
 
@@ -29,7 +28,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
     const parsingRegisterMap = new Map<string, RegisterParse["value"]>();
     define.setup(register(parsingRegisterMap));
 
-    return () => {
+    return (converToFun?: (v: ParsingMapModule) => ParsingMapModule) => {
         if (!mapModule.has(moduleId)) {
             const { globalModuleKey, prefix } = useConfig();
             const { proxy } = proxyGraph((key: string) => {
@@ -38,7 +37,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
                 //如果是apply开头,直接使用key
                 //这里可以在parseTrigger之前使用starWith判断是否为prefix配置开头
                 //但是为更直观,暂时先这样
-                if (triggerKey === prefix) {
+                if (triggerKey === prefix || triggerKey === moduleId) {
                     triggerKey = key
                 }
 
@@ -47,9 +46,11 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
                 //如果不是全局模块在自己内部没找到,需要在全局模块上查找一次
                 //如果全局模块上没有找到已经解析过的
                 //那么就看全局上有没有注册解析配置
-                if (moduleId !== globalModuleKey) {
-                    // mapModule.get(globalModuleKey)
-                    return
+                if (moduleId !== globalModuleKey && !parsingValue) {
+                    const globalMaybeHave = mapModule.get(globalModuleKey)?.[key];
+                    if (globalMaybeHave) {
+                        return [triggerKey, globalMaybeHave]
+                    }
                 }
 
                 if (parsingValue) {
@@ -67,8 +68,10 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
         return new Proxy(toRawMapTree(refCss), {
             get(_, key) {
                 if (!key || !isString(key)) return;
+                //存在另外转换,调用里国外转换
+                if (converToFun) converToFun(refCss[key])
                 //在这里进行转换
-                return refCss[key];
+                return converTo[define.conver](refCss[key]);
             }
         })
     }

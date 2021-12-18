@@ -10,9 +10,17 @@
 
 import { isCustomChunk, isCustomParse, isString } from "./shared";
 import { GetProxy } from "./parsingGraph";
-import { CustomChunk, CustomParse, RegisterParse } from "./types";
+import { CustomChunk, CustomParse, ParsingMapModule, RegisterParse } from "./types";
 import { useConfig } from "./config";
 
+export const converTo = {
+    class(v:ParsingMapModule){
+
+    },
+    style(v:ParsingMapModule){
+        return v;
+    }
+}
 
 export const parseTrigger = (triggerKey: string) => {
     const _s = triggerKey.split("_");

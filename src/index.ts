@@ -1,6 +1,7 @@
 import { App } from "vue";
 import { useConfig } from "./config";
 import { defineModule } from "./module";
+// import { converTo } from "./parseTrigger";
 
 
 export const crabCSS = () => {
@@ -8,6 +9,7 @@ export const crabCSS = () => {
     const config = useConfig();
 
     const useModule = defineModule(config.globalModuleKey, {
+        conver:"style",
         setup(register) {
             register.register("mt", "margin-top")
                 .register("mr", "margin-left")
@@ -25,7 +27,7 @@ export const crabCSS = () => {
             }
         }
     });
-
+    //converTo.class 后面要用
     return {
         install(app: App) {
             app.config.globalProperties.Style = useModule();

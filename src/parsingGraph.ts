@@ -6,7 +6,7 @@ export type GetRef = () => ShallowReactive<ParsingMapTree>;
 export type GetProxy = () => ProxyHandler<ParsingMapTree>
 
 export interface ParsingGraphReturn {
-    addParsingMapItem: (key: string, value: string) => void,
+    addParsingMapItem: (key: string, value: ParsingMapTreeValue) => void,
     removeParsingMapItem: (key: string) => void,
     getGraphRef: GetRef,
     setParsingMapItem: (this: ParsingGraphReturn, key: string) => void
