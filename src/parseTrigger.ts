@@ -14,11 +14,29 @@ import { CustomChunk, CustomParse, ParsingMapModule, RegisterParse } from "./typ
 import { useConfig } from "./config";
 
 export const converTo = {
-    class(v:ParsingMapModule){
+    class(v: ParsingMapModule) {
 
     },
-    style(v:ParsingMapModule){
+    style(v: ParsingMapModule) {
         return v;
+    }
+}
+//TODO
+export const crateClassRule = () => {
+    if(window){
+        return ()=>{}
+    }
+    const styles = document.querySelectorAll("style");
+    const findJIT = Array.from(styles).findIndex(v => v.title === "JITCSS");
+    if (findJIT === -1) {
+        const JSTStyleDom = document.createElement("style");
+        JSTStyleDom.title = "JITCSS";
+        document.head.append(JSTStyleDom);
+    }
+    const styleSheets = document.styleSheets;
+    const JITSheet = Array.from(styleSheets).find(v => v.title === "JITCSS");
+    return (rule:ParsingMapModule,key:string) => {
+
     }
 }
 

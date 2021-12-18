@@ -1,6 +1,6 @@
 import { ParsingMapModule, ParsingMapTree, ParsingMapTreeValue, RegisterParse } from "./types";
 import { proxyGraph } from "./parsingGraph";
-import { converTo, converToGraphValue, parseTrigger } from "./parseTrigger";
+import { converTo, converToGraphValue, crateClassRule, parseTrigger } from "./parseTrigger";
 import { useConfig } from "./config";
 import { isString, toRawMapTree } from "./shared";
 
@@ -26,7 +26,7 @@ export const getRegisterModule = () => Object.fromEntries(mapModule);
 export const defineModule = (moduleId: string, define: RegisterSetUp) => {
     const parsingRegisterMap = new Map<string, RegisterParse["value"]>();
     define.setup(register(parsingRegisterMap));
-    const proxyJit = (converTo: (v: ParsingMapModule) => any) => {
+    const proxyJit = (converTo: (v: ParsingMapModule,key?:string) => any) => {
         if (!mapModule.has(moduleId)) {
             const { globalModuleKey, prefix } = useConfig();
             const { proxy } = proxyGraph((key: string) => {
@@ -62,10 +62,11 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
             get(_, key) {
                 if (!key || !isString(key)) return;
                 //在这里进行转换
-                return converTo(refCss[key]);
+                return converTo(refCss[key],key);
             }
         })
     }
+
     return [proxyJit(converTo["class"]),proxyJit(converTo["style"])]
 }
 
