@@ -8,8 +8,7 @@ export const crabCSS = () => {
 
     const config = useConfig();
 
-    const useModule = defineModule(config.globalModuleKey, {
-        conver:"style",
+    const [_,useGlobalStyle] = defineModule(config.globalModuleKey, {
         setup(register) {
             register.register("mt", "margin-top")
                 .register("mr", "margin-left")
@@ -30,7 +29,7 @@ export const crabCSS = () => {
     //converTo.class 后面要用
     return {
         install(app: App) {
-            app.config.globalProperties.Style = useModule();
+            app.config.globalProperties.Style = useGlobalStyle();
         }
     }
 
