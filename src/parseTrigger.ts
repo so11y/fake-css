@@ -13,18 +13,30 @@ import { GetProxy } from "./parsingGraph";
 import { CustomChunk, CustomParse, ParsingMapModule, RegisterParse } from "./types";
 import { useConfig } from "./config";
 
-export const converTo = {
-    class(v: ParsingMapModule) {
+const converToClass = () => {
 
+}
+
+export const converTo = {
+    class(v: ParsingMapModule, key: string, sheet: CSSStyleSheet) {
+        const isHave = Array.from(sheet.cssRules).findIndex(v => {
+            const startWithClassName = (v as CSSStyleRule).selectorText;
+            return startWithClassName === `.${key}`;
+        })
+        if (!isHave) {
+
+            // sheet.insertRule();
+        }
+        return `.${key}`;
     },
     style(v: ParsingMapModule) {
         return v;
     }
 }
-//TODO
-export const crateClassRule = () => {
-    if(window){
-        return ()=>{}
+
+export const crateClassRule = (callback: Function) => {
+    if (!window) {
+        return () => { }
     }
     const styles = document.querySelectorAll("style");
     const findJIT = Array.from(styles).findIndex(v => v.title === "JITCSS");
@@ -35,9 +47,8 @@ export const crateClassRule = () => {
     }
     const styleSheets = document.styleSheets;
     const JITSheet = Array.from(styleSheets).find(v => v.title === "JITCSS");
-    return (rule:ParsingMapModule,key:string) => {
 
-    }
+    return callback(JITSheet!);
 }
 
 export const parseTrigger = (triggerKey: string) => {

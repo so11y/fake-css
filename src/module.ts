@@ -26,7 +26,7 @@ export const getRegisterModule = () => Object.fromEntries(mapModule);
 export const defineModule = (moduleId: string, define: RegisterSetUp) => {
     const parsingRegisterMap = new Map<string, RegisterParse["value"]>();
     define.setup(register(parsingRegisterMap));
-    const proxyJit = (converTo: (v: ParsingMapModule,key?:string) => any) => {
+    const proxyJit = (converTo: (v: ParsingMapModule, key?: string) => any) => {
         if (!mapModule.has(moduleId)) {
             const { globalModuleKey, prefix } = useConfig();
             const { proxy } = proxyGraph((key: string) => {
@@ -62,12 +62,17 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
             get(_, key) {
                 if (!key || !isString(key)) return;
                 //在这里进行转换
-                return converTo(refCss[key],key);
+                return converTo(refCss[key], key);
             }
         })
     }
 
-    return [proxyJit(converTo["class"]),proxyJit(converTo["style"])]
+    //这块写法要重点优化
+    return [() => crateClassRule((sheet: CSSStyleSheet) => {
+        return proxyJit((ParsingMapModule, key) => {
+            return converTo["class"](ParsingMapModule, key!, sheet)
+        })();
+    }), proxyJit(converTo["style"])]
 }
 
 

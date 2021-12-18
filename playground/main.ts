@@ -23,7 +23,7 @@ setTimeout(() => {
 }, 500)
 app.mount('#app')
 
-const [_1, useGoodsStyle] = defineModule("goods", {
+const [useGoodsClass, useGoodsStyle] = defineModule("goods", {
     setup(v) {
         v.register("goods_layout", {
             chunk: (ref) => {
@@ -35,7 +35,8 @@ const [_1, useGoodsStyle] = defineModule("goods", {
         })
     }
 })
-console.log(useGoodsStyle().goods_layout);
+console.log(useGoodsClass().pt_30);
+// console.log(useGoodsStyle().goods_layout);
 // console.log(useGoodsStyle().goods_layout);
 // console.log(useGoodsStyle().pt_11);
 // const [_2, useUserStyle] = defineModule("user", {
