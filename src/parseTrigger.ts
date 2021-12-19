@@ -14,7 +14,11 @@ import { CustomChunk, CustomParse, ParsingMapModule, RegisterParse } from "./typ
 import { useConfig } from "./config";
 
 const genClassToString = (v: ParsingMapModule) => {
-    // return JSON.stringify(v).replaceAll(",", ";");
+    let classRule = "";
+    Object.keys(v).forEach(key => {
+        classRule += `${key}:${v[key]};`
+    })
+    return classRule
 }
 
 export const converTo = {
@@ -23,23 +27,18 @@ export const converTo = {
             const startWithClassName = (v as CSSStyleRule).selectorText;
             return startWithClassName === `.${key}`;
         })
-        console.log(isHave);
         if (isHave === -1) {
             const classRule = genClassToString(v);
-            console.log(`.${key}${classRule}`,"classRule");
-            // sheet.insertRule(`.${key}${classRule}`);
+            sheet.insertRule(`.${key}{${classRule}}`);
         }
-        return `.${key}`;
+        return `${key}`;
     },
     style(v: ParsingMapModule) {
         return v;
     }
 }
 
-export const crateClassRule = (callback: Function) => {
-    if (!window) {
-        return () => { }
-    }
+export const crateClassRule = () => {
     const styles = document.querySelectorAll("style");
     const findJIT = Array.from(styles).findIndex(v => v.title === "JITCSS");
     if (findJIT === -1) {
@@ -50,7 +49,7 @@ export const crateClassRule = (callback: Function) => {
     const styleSheets = document.styleSheets;
     const JITSheet = Array.from(styleSheets).find(v => v.title === "JITCSS");
 
-    return callback(JITSheet!);
+    return JITSheet
 }
 
 export const parseTrigger = (triggerKey: string) => {
@@ -68,16 +67,16 @@ export const parseChunk = (chunk: Array<{}>) => {
     return chunkStyles;
 }
 
-export function converToGraphValue(registerKey: string, registerValue: string, triggerValue: string, getProxy: GetProxy): any;
-export function converToGraphValue(registerKey: string, registerValue: CustomParse, triggerValue: string, getProxy: GetProxy): any;
-export function converToGraphValue(registerKey: string, registerValue: CustomChunk, triggerValue: string, getProxy: GetProxy): any;
-export function converToGraphValue(registerKey: string, registerValue: RegisterParse["value"], triggerValue: string, getProxy: GetProxy): any;
-export function converToGraphValue(registerKey: string, registerValue: any, triggerValue: string, getProxy: GetProxy): any {
-    const config = useConfig();
+export function converToGraphValue(key: string, registerValue: string, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(key: string, registerValue: CustomParse, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(key: string, registerValue: CustomChunk, triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(key: string, registerValue: RegisterParse["value"], triggerValue: string, getProxy: GetProxy): any;
+export function converToGraphValue(key: string, registerValue: any, triggerValue: string, getProxy: GetProxy): any {
     if (isString(registerValue)) {
+        const config = useConfig();
         return { [registerValue]: `${triggerValue}${config.unit}` };
     } else if (isCustomParse(registerValue)) {
-        // registerValue.cssKey
+        return registerValue.parse(key, getProxy(),triggerValue)
     } else if (isCustomChunk(registerValue)) {
         return parseChunk(registerValue.chunk(getProxy()))
     }

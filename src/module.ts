@@ -23,6 +23,13 @@ const mapModule = new Map<string, ParsingMapTreeValue>();
 
 export const getRegisterModule = () => Object.fromEntries(mapModule);
 
+const getRegisterMapValue = <T extends Map<string, any>>(map: T, key: string, triggerKey: string) => {
+    if (map.get(key)) {
+        return map.get(key);
+    }
+    return map.get(triggerKey)
+}
+
 export const defineModule = (moduleId: string, define: RegisterSetUp) => {
     const parsingRegisterMap = new Map<string, RegisterParse["value"]>();
     define.setup(register(parsingRegisterMap));
@@ -36,7 +43,8 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
                     triggerKey = key
                 }
 
-                const parsingValue = parsingRegisterMap.get(triggerKey)
+                //查一次拆开的,拆开的没查找查一次全称
+                const parsingValue = getRegisterMapValue(parsingRegisterMap, key, triggerKey);
 
                 //在自己的模块中没有找到，将在全局模块中查找一次
                 if (moduleId !== globalModuleKey && !parsingValue) {
@@ -48,7 +56,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 
                 if (parsingValue) {
                     //这里不想在写类型了,还要在给这个callback定义类型，在返回一个元组
-                    return [triggerKey, converToGraphValue(triggerKey, parsingValue!, triggerValue, proxy)];
+                    return [triggerKey, converToGraphValue(key, parsingValue!, triggerValue, proxy)];
                 }
 
                 throw `no find Register can parsing key ${triggerKey} , value ${triggerValue}`;
@@ -61,18 +69,21 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
         return () => new Proxy(toRawMapTree(refCss), {
             get(_, key) {
                 if (!key || !isString(key)) return;
+                if(key === "__v_isRef") return;
                 //在这里进行转换
                 return converTo(refCss[key], key);
             }
         })
     }
 
-    //这块写法要重点优化
-    return [() => crateClassRule((sheet: CSSStyleSheet) => {
-        return proxyJit((ParsingMapModule, key) => {
-            return converTo["class"](ParsingMapModule, key!, sheet)
-        })();
-    }), proxyJit(converTo["style"])]
+    return [() => {
+        const JITSheet = crateClassRule();
+        if (JITSheet) {
+            return proxyJit((ParsingMapModule, key) => converTo["class"](ParsingMapModule, key!, JITSheet))();
+        }
+        console.warn("now platform no support jitClass you can use style !")
+
+    }, proxyJit(converTo["style"])]
 }
 
 

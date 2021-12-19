@@ -5,13 +5,13 @@ export const isString = (key: any): key is string => {
 }
 
 export const isCustomParse = (key: any): key is CustomParse => {
-    return key.cssKey && key.parse;
+    return key.parse;
 }
 
 export const isCustomChunk = (key: any): key is CustomChunk => {
-    return !key.cssKey && key.chunk;
+    return key.chunk;
 }
 
-export const toRawMapTree = <T extends {_toRaw?:any}>(key: T): T => {
+export const toRawMapTree = <T extends { _toRaw?: any }>(key: T): T => {
     return key._toRaw
 }
