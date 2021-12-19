@@ -19,7 +19,8 @@ Fake-css是一个基于`Vue3`开发的运行时css库,开箱即用,零预先配�
 2. 搭配vue3响应式
 3. 轻量
 4. 模块化定义,变相scoped
-5. 支持Typescript
+5. 高度自定义解析方式
+6. 支持Typescript
 
 
 
