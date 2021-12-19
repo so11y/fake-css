@@ -1,13 +1,13 @@
 const typeScriptPlugin = require('rollup-plugin-typescript2');
 
 const banner = `/*!
-* $crab-css v0.0.1
+* $fake-css v0.0.1
 * (c) ${new Date().getFullYear()} zrrz
 * @license MIT
 */`;
 
 export default {
-    input: './src/carbCss.ts',
+    input: './src/fakeCss.ts',
     plugins: [
         typeScriptPlugin({
             check: false,
@@ -16,7 +16,7 @@ export default {
     external: ["vue"],
     output: {
         banner,
-        file: './dist/crab-css.esm-browser.js',
+        file: './dist/fake-css.esm-browser.js',
         format: 'es'
     }
 }

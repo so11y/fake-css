@@ -1,15 +1,29 @@
 {
-    "name": "crab-css",
-    "version": "0.0.0",
-    "main": "dist/crab-css.esm-browser.js",
-    "types": "dist/carbCss.d.ts",
+    "name": "fake-css",
+    "version": "0.0.1",
+    "author": {
+        "name": "zrrz",
+        "email": "247076126@qq.com"
+    },
+    "main": "dist/fake-css.esm-browser.js",
+    "types": "dist/fakeCss.d.ts",
     "scripts": {
         "build": "rollup --config"
     },
+    "files": [
+        "dist/*.js",
+        "dist/*.d.ts"
+    ],
+    "license": "MIT",
     "devDependencies": {
         "typescript": "^4.5.2",
         "vue": "^3.2.16",
         "rollup": "^2.59.0",
         "rollup-plugin-typescript2": "^0.30.0"
+    },
+    "homepage": "https://github.com/so11y/fake-css",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/so11y/fake-css.git"
     }
 }
