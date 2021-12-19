@@ -1,10 +1,15 @@
 {
-  "name": "crab-css",
-  "version": "0.0.0",
-  "scripts": {
-  },
-  "devDependencies": {
-    "typescript": "^4.5.2",
-    "vue": "^3.2.16"
-  }
+    "name": "crab-css",
+    "version": "0.0.0",
+    "main": "dist/crab-css.esm-browser.js",
+    "types": "dist/carbCss.d.ts",
+    "scripts": {
+        "build": "rollup --config"
+    },
+    "devDependencies": {
+        "typescript": "^4.5.2",
+        "vue": "^3.2.16",
+        "rollup": "^2.59.0",
+        "rollup-plugin-typescript2": "^0.30.0"
+    }
 }

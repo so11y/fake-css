@@ -1,36 +1,18 @@
+
 {
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "baseUrl": "./",
+        "esModuleInterop": true,
+        "declaration": true,
+        "moduleResolution": "node",
+    },
     "include": [
-        "src/**/*.ts",
+        "./src/**/*.ts"
     ],
     "exclude": [
         "node_modules",
-    ],
-    "compilerOptions": {
-        "baseUrl": "./",
-        "rootDir": "./",
-        "outDir": "dist",
-        "sourceMap": false,
-        "target": "esnext",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "noUnusedLocals": true,
-        "strictFunctionTypes": true,
-        "strictNullChecks": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noImplicitReturns": false,
-        "strict": true,
-        "isolatedModules": true,
-        "experimentalDecorators": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "lib": [
-            "esnext",
-            "dom"
-        ],
-        "types": [
-            "node"
-        ]
-    }
+        "./playground"
+    ]
 }
