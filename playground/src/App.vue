@@ -17,7 +17,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <h1>🎇crab-css playground</h1>
+    <h1>🎇fake-css playground</h1>
     <nav>
       <template v-for="page in pages" :key="page.name">
         <router-link :class="[css.mr_10]" :to="page" v-slot="{ route }">{{

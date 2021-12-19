@@ -1,4 +1,4 @@
-import { defineModule } from "../../../src/carbCss";
+import { defineModule } from "../../../src/fakeCss";
 
 export default defineModule("user", {
     setup(v) {
