@@ -1,6 +1,7 @@
 {
     "name": "fake-css",
-    "version": "0.0.1",
+    "version": "0.0.3",
+    "description": "fake-css is javascript runtime css framework",
     "author": {
         "name": "zrrz",
         "email": "247076126@qq.com"
