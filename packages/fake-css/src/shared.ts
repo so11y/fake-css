@@ -1,17 +1,17 @@
-import { CustomChunk, CustomParse } from "./types";
+import { CustomChunk, CustomParse } from './types';
 
 export const isString = (key: any): key is string => {
-    return typeof key === "string"
-}
+	return typeof key === 'string';
+};
 
 export const isCustomParse = (key: any): key is CustomParse => {
-    return key.parse;
-}
+	return key.parse;
+};
 
 export const isCustomChunk = (key: any): key is CustomChunk => {
-    return key.chunk;
-}
+	return key.chunk;
+};
 
 export const toRawMapTree = <T extends { _toRaw?: any }>(key: T): T => {
-    return key._toRaw
-}
+	return key._toRaw;
+};

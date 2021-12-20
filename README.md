@@ -12,7 +12,7 @@
 ---
 
 ### 介绍
-Fake-css是一个基于`Vue3`开发的运行时css库,开箱即用,零预先配置。
+Fake-css是一个基于`Vue3`开发的运行时`css`库,开箱即用,零预先配置。
 
 
 ### 下载
@@ -39,6 +39,26 @@ yarn add fake-css
 ### 阶段
 1. 目前任处于构思阶段,基本情况已经固定。
 2. 流程固定化之后,将会重新重构,提供完整的测试用例。
+
+
+
+### 示例
+
+1. 更多使用方式可以在项目中playground查看
+
+``` html
+
+<template>
+    <!--
+       1. 你在在pt_xx 这里输入你任何的数值,都将会动态解析
+       2. pt (padding_top), ml (margint_left) 等等。
+    -->
+    <div :class="[css.pt_30]">
+
+    </div>
+</template>
+
+```
 
 
 
