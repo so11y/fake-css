@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { crabCSS, useConfig } from "../../src/fakeCss"
+import { crabCSS, useConfig } from "../../fake-css/src/fakeCss"
 import appVue from './App.vue';
 import routes from './routes';
 
