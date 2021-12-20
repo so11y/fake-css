@@ -1,6 +1,6 @@
 import { shallowReactive, toRaw, ShallowReactive } from 'vue';
 import { isString } from './shared';
-import { ParsingMapModule, ParsingMapTree, ParsingMapTreeValue } from './types';
+import { ParsingMapTree, ParsingMapTreeValue } from './types';
 
 export type GetRef = () => ShallowReactive<ParsingMapTree>;
 export type GetProxy = () => ProxyHandler<ParsingMapTree>;
