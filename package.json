@@ -5,6 +5,9 @@
         "name": "zrrz",
         "email": "247076126@qq.com"
     },
+    "scripts": {
+        "bootstrap": "pnpm && node scripts/bootstrap.mjs"
+    },
     "license": "MIT",
     "homepage": "https://github.com/so11y/fake-css",
     "repository": {
