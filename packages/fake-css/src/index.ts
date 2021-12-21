@@ -2,7 +2,7 @@ import { App } from 'vue';
 import { useConfig } from './config';
 import { defineModule } from './module';
 
-export const crabCSS = () => {
+export const fekeCss = () => {
 	const config = useConfig();
 
 	const [useGlobalClass, useGlobalStyle] = defineModule(
