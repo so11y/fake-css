@@ -10,7 +10,8 @@
     "types": "dist/fakeCss.d.ts",
     "scripts": {
         "test":"jest --watchAll",
-        "build": "rollup --config"
+        "build": "rollup --config",
+        "lint:fix": "eslint --fix"
     },
     "files": [
         "dist/*.js",
