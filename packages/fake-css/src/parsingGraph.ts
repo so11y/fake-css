@@ -57,6 +57,7 @@ export const proxyGraph: ProxyGraph = (parseTrigger) => {
 			if (!key || !isString(key)) return;
 			if (key === '_toRaw') return rowMapRef;
 			//先在自己的Graph模块上找
+			//这个has触发vue响应式代理的依赖收集
 			if (!Reflect.has(mapRef, key)) {
 				const [converKey, converValue] = parseTrigger(key);
 
@@ -69,6 +70,8 @@ export const proxyGraph: ProxyGraph = (parseTrigger) => {
 		},
 		set(_, key, value) {
 			if (!key || !isString(key)) return;
+			//修改的情况直接修改vue响应式数据,
+			//执行修改界面
 			if (Array.isArray(value)) {
 				mapRef[key] = parseChunk(value);
 			} else if (isObject(value)) {
