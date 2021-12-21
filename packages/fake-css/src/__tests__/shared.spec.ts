@@ -1,7 +1,7 @@
 import { isCustomChunk, isCustomParse, isObject, isString } from '../shared';
 
 describe('shared file test', () => {
-	it('test isObject', () => {
+	test('test isObject', () => {
 		expect(isObject({})).toBeTruthy();
 		expect(isObject([])).toBeTruthy();
 	});
