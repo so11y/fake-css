@@ -20,3 +20,9 @@ export const isCustomChunk = (key: unknown): key is CustomChunk => {
 export const toRawMapTree = <T extends { _toRaw?: any }>(key: T): T => {
 	return key._toRaw;
 };
+
+export const isFunction = (
+	key: unknown
+): key is (...arg: unknown[]) => unknown => {
+	return typeof key === 'function';
+};

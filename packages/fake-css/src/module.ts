@@ -5,6 +5,7 @@ import {
 	RegisterParse
 } from './types';
 import { proxyGraph } from './parsingGraph';
+
 import {
 	converTo,
 	converToGraphValue,
@@ -12,7 +13,7 @@ import {
 	parseTrigger
 } from './parseTrigger';
 import { useConfig } from './config';
-import { isString, toRawMapTree } from './shared';
+import { isFunction, isString, toRawMapTree } from './shared';
 
 export type Register = (registers: ReturnType<typeof register>) => void;
 
@@ -115,3 +116,21 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 		proxyJit(converTo['style'])
 	];
 };
+type PatchFn = (proxy: ParsingMapModule) => void;
+
+export function patch(p: PatchFn);
+export function patch(p: string, pathcFn: PatchFn);
+export function patch(p: string | PatchFn, pathcFn?: PatchFn) {
+	if (!isString(p) && isFunction(p)) {
+		const config = useConfig();
+		const globalModule = mapModule.get(config.globalModuleKey);
+		if (globalModule) {
+			p(globalModule);
+		}
+	} else if (isString(p)) {
+		const globalModule = mapModule.get(p);
+		if (globalModule) {
+			pathcFn(globalModule);
+		}
+	}
+}

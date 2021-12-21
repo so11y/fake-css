@@ -23,6 +23,13 @@ useConfig({
                 ]
             }
         })
+        v.register("buttonAcitveBg", {
+            chunk(ref) {
+                return [
+                    ref.bg_red
+                ]
+            }
+        })
     }
 })
 

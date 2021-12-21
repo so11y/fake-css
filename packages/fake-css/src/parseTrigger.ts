@@ -1,5 +1,5 @@
 import { isCustomChunk, isCustomParse, isString } from './shared';
-import { GetProxy } from './parsingGraph';
+import { dirtyClassName, GetProxy } from './parsingGraph';
 import {
 	CustomChunk,
 	CustomParse,
@@ -9,11 +9,9 @@ import {
 import { useConfig } from './config';
 
 const genClassToString = (v: ParsingMapModule) => {
-	let classRule = '';
-	Object.keys(v).forEach((key) => {
-		classRule += `${key}:${v[key]};`;
-	});
-	return classRule;
+	return Object.keys(v)
+		.map((key) => `${key}:${v[key]};`)
+		.join('');
 };
 
 export const converTo = {
@@ -25,6 +23,15 @@ export const converTo = {
 		if (isHave === -1) {
 			const classRule = genClassToString(v);
 			sheet.insertRule(`.${key}{${classRule}}`);
+		} else if (dirtyClassName.has(key)) {
+			const classRule = genClassToString(v);
+			// why no CSSStyleDeclaration type
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const r = (sheet.cssRules.item(isHave) as any).style;
+			if (r) {
+				(r as CSSStyleDeclaration).cssText = `${classRule}`;
+				dirtyClassName.delete(key);
+			}
 		}
 		return `${key}`;
 	},
@@ -35,14 +42,14 @@ export const converTo = {
 
 export const crateClassRule = () => {
 	const styles = document.querySelectorAll('style');
-	const findJIT = Array.from(styles).findIndex((v) => v.title === 'JITCSS');
+	const findJIT = Array.from(styles).findIndex((v) => v.title === 'FakeCss');
 	if (findJIT === -1) {
 		const JSTStyleDom = document.createElement('style');
-		JSTStyleDom.title = 'JITCSS';
+		JSTStyleDom.title = 'FakeCss';
 		document.head.append(JSTStyleDom);
 	}
 	const styleSheets = document.styleSheets;
-	const JITSheet = Array.from(styleSheets).find((v) => v.title === 'JITCSS');
+	const JITSheet = Array.from(styleSheets).find((v) => v.title === 'FakeCss');
 
 	return JITSheet;
 };

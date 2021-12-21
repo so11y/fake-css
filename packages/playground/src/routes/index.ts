@@ -24,4 +24,9 @@ export default [
 		name: 'module',
 		component: () => import('../page/module.vue')
 	},
+    {
+		path: '/patch',
+		name: 'patch',
+		component: () => import('../page/patch.vue')
+	},
 ];

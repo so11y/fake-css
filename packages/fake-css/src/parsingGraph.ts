@@ -1,5 +1,6 @@
-import { shallowReactive, toRaw, ShallowReactive } from 'vue';
-import { isString } from './shared';
+import { shallowReactive, toRaw, ShallowReactive, reactive } from 'vue';
+import { parseChunk } from './parseTrigger';
+import { isObject, isString } from './shared';
 import { ParsingMapTree, ParsingMapTreeValue } from './types';
 
 export type GetRef = () => ShallowReactive<ParsingMapTree>;
@@ -22,6 +23,8 @@ interface ProxyGraph {
 interface ParsingGraph {
 	(): ParsingGraphReturn;
 }
+
+export const dirtyClassName = new Set<string>();
 
 const parsingGraph: ParsingGraph = () => {
 	const mapGraph = {};
@@ -63,6 +66,16 @@ export const proxyGraph: ProxyGraph = (parseTrigger) => {
 			}
 			//在这里可以直接返回,不同类型,另外在proxy代理转换
 			return Reflect.get(_, key);
+		},
+		set(_, key, value) {
+			if (!key || !isString(key)) return;
+			if (Array.isArray(value)) {
+				mapRef[key] = parseChunk(value);
+			} else if (isObject(value)) {
+				mapRef[key] = value;
+			}
+			dirtyClassName.add(key);
+			return true;
 		}
 	});
 	return {

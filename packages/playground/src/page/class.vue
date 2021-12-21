@@ -2,6 +2,8 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+    setup(){
+    }
 });
 </script>
 
@@ -16,6 +18,5 @@ export default defineComponent({
     <hr />
     <div :class="[css.ml_20, css.mb_12]">:class="[css.ml_20,class.mb_12]"</div>
     <div :class="[css.ml_10]">:class="[css.ml_10]"</div>
-
   </div>
 </template>
