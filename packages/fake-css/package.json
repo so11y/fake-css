@@ -9,6 +9,7 @@
     "main": "dist/fake-css.esm-browser.js",
     "types": "dist/fakeCss.d.ts",
     "scripts": {
+        "test":"jest --watchAll",
         "build": "rollup --config"
     },
     "files": [
