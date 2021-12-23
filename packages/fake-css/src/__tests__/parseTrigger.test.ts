@@ -1,4 +1,4 @@
-import { parseTrigger } from '../parseTrigger';
+import { parseChunk, parseTrigger } from '../parseTrigger';
 
 describe('shared file parseTrigger', () => {
 	test('test parseTrigger fucntion ', () => {
@@ -6,5 +6,13 @@ describe('shared file parseTrigger', () => {
 
 		expect(key).toBe('pt');
 		expect(value).toBe('30');
+	});
+
+	test('test parseChunk function ', () => {
+		const result = parseChunk([{ a: 1 }, { b: 2 }]);
+		expect(result).toEqual({
+			a: 1,
+			b: 2
+		});
 	});
 });
