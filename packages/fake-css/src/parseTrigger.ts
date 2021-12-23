@@ -8,7 +8,7 @@ import {
 } from './types';
 import { useConfig } from './config';
 
-const genClassToString = (v: ParsingMapModule) => {
+export const genClassToString = (v: ParsingMapModule) => {
 	return Object.keys(v)
 		.map((key) => `${key}:${v[key]};`)
 		.join('');
@@ -41,6 +41,11 @@ export const converTo = {
 };
 
 export const crateClassRule = () => {
+	if (__TEST__) {
+		const JSTStyleDom = document.createElement('style');
+		document.head.append(JSTStyleDom);
+		return document.styleSheets.item(0);
+	}
 	const styles = document.querySelectorAll('style');
 	const findJIT = Array.from(styles).findIndex((v) => v.title === 'FakeCss');
 	if (findJIT === -1) {
