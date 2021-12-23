@@ -1,5 +1,8 @@
 {
     "root": true,
+    "globals": {
+        "__TEST__":true
+    },
     "env": {
         "jest": true,
         "node": true,

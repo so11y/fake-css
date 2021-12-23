@@ -5,7 +5,6 @@ import {
 	RegisterParse
 } from './types';
 import { proxyGraph } from './parsingGraph';
-
 import {
 	converTo,
 	converToGraphValue,
@@ -20,6 +19,7 @@ export type Register = (registers: ReturnType<typeof register>) => void;
 export type RegisterSetUp = {
 	setup: Register;
 };
+type PatchFn = (proxy: ParsingMapModule) => void;
 
 const register = (map: Map<string, RegisterParse['value']>) => {
 	return {
@@ -116,7 +116,6 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 		proxyJit(converTo['style'])
 	];
 };
-type PatchFn = (proxy: ParsingMapModule) => void;
 
 export function patch(p: PatchFn);
 export function patch(p: string, pathcFn: PatchFn);

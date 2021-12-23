@@ -5,5 +5,8 @@ module.exports = {
 	testMatch: ['<rootDir>/src/__tests__/**/*.ts'],
 	transform: {
 		'^.+\\.tsx?$': '@sucrase/jest-plugin'
+	},
+	globals: {
+		__TEST__: true
 	}
 };
