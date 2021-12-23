@@ -1,16 +1,20 @@
-import { shallowReactive, toRaw, ShallowReactive, reactive } from 'vue';
+import { shallowReactive, toRaw, ShallowReactive } from 'vue';
 import { parseChunk } from './parseTrigger';
 import { isObject, isString } from './shared';
 import { ParsingMapTree, ParsingMapTreeValue } from './types';
 
 export type GetRef = () => ShallowReactive<ParsingMapTree>;
-export type GetProxy = () => ProxyHandler<ParsingMapTree>;
+export type GetProxy = () => ParsingMapTree;
 
 export interface ParsingGraphReturn {
 	addParsingMapItem: (key: string, value: ParsingMapTreeValue) => void;
 	removeParsingMapItem: (key: string) => void;
 	getGraphRef: GetRef;
-	setParsingMapItem: (this: ParsingGraphReturn, key: string) => void;
+	setParsingMapItem: (
+		this: ParsingGraphReturn,
+		key: string,
+		value: ParsingMapTreeValue
+	) => void;
 }
 
 interface ProxyGraph {
@@ -40,9 +44,9 @@ const parsingGraph: ParsingGraph = () => {
 		getGraphRef() {
 			return mapRef;
 		},
-		setParsingMapItem(key: string) {
+		setParsingMapItem(key: string, value: ParsingMapTreeValue) {
 			if (Reflect.has(mapGraph, key)) {
-				// this.
+				this.addParsingMapItem(key, value);
 			}
 		}
 	};

@@ -1,4 +1,10 @@
-import { isCustomChunk, isCustomParse, isObject, isString } from '../shared';
+import {
+	isCustomChunk,
+	isCustomParse,
+	isFunction,
+	isObject,
+	isString
+} from '../shared';
 
 describe('shared file test', () => {
 	test('test isObject', () => {
@@ -31,5 +37,9 @@ describe('shared file test', () => {
 				chunk: '1'
 			})
 		).toBeTruthy();
+	});
+
+	test('test isFunction ', () => {
+		expect(isFunction(() => null)).toBe(true);
 	});
 });
