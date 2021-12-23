@@ -60,6 +60,10 @@ describe('shared file parsingGraph', () => {
 
 	test('test set chunk ', () => {
 		const getRef = proxy();
-		expect(getRef.good).toBe(getRef.good);
+		const getRawRef = rawRef();
+		getRef.good = {
+			'padding-top': '20px'
+		};
+		expect(getRef.good).toBe(getRawRef.good);
 	});
 });
