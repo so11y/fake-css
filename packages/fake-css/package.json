@@ -11,7 +11,8 @@
     "scripts": {
         "test": "jest --watchAll",
         "build": "rollup --config",
-        "lint:fix": "eslint --fix"
+        "lint:fix": "eslint --fix",
+        "coverage": "jest --coverage",
     },
     "exports": {
         ".": {
