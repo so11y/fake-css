@@ -15,9 +15,7 @@ function runnerInstall(cwd) {
 }
 
 function run() {
-    Promise.all([
-        runnerInstall(FakeCssCwd),
-        runnerInstall(PlaygroundCwd)
-    ])
+    runnerInstall(FakeCssCwd),
+    runnerInstall(PlaygroundCwd)
 }
 run();
