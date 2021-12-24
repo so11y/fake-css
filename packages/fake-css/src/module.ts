@@ -32,7 +32,7 @@ const register = (map: Map<string, RegisterParse['value']>) => {
 
 const mapModule = new Map<string, ParsingMapTreeValue>();
 
-export const getRegisterModule = () => Object.fromEntries(mapModule);
+export const getRegisterModule = () => mapModule;
 
 const getRegisterMapValue = <T extends Map<string, any>>(
 	map: T,
@@ -83,7 +83,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 					];
 				}
 
-				throw `no find Register can parsing key ${triggerKey} , value ${triggerValue}`;
+				throw `no find register can parsing key ${triggerKey} , value ${triggerValue}`;
 			});
 			mapModule.set(moduleId, proxy() as ParsingMapTree);
 		}
@@ -91,15 +91,14 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const refCss = mapModule.get(moduleId)!;
 
-		return () =>
-			new Proxy(toRawMapTree(refCss), {
-				get(_, key) {
-					if (!key || !isString(key)) return;
-					if (key === '__v_isRef') return;
-					//在这里进行转换
-					return converTo(refCss[key] as ParsingMapModule, key);
-				}
-			});
+		return new Proxy(toRawMapTree(refCss), {
+			get(_, key) {
+				if (!key || !isString(key)) return;
+				if (key === '__v_isRef') return;
+				//在这里进行转换
+				return converTo(refCss[key] as ParsingMapModule, key);
+			}
+		});
 	};
 
 	return [
@@ -109,11 +108,11 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 				return proxyJit((ParsingMapModule, key) =>
 					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					converTo['class'](ParsingMapModule, key!, JITSheet)
-				)();
+				);
 			}
 			console.warn('now platform no support jitClass you can use style !');
 		},
-		proxyJit(converTo['style'])
+		() => proxyJit(converTo['style'])
 	];
 };
 
