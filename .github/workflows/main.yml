@@ -19,13 +19,6 @@ jobs:
         with:
           node-version: '14.x'
 
-      - name: Cahe Node Dependencies
-        id: cache
-        uses: actions/cache@v1
-        with:
-          path: packages/fake-css/node_modules
-          key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
-
       - name: npm i
         run: cd packages/fake-css && npm i
 
