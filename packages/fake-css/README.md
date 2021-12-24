@@ -6,6 +6,8 @@
   </p>
   <p>
     <img src="https://img.shields.io/badge/vue-v3.2.0%2B-%23407fbc" alt="vue">
+    <img src="https://img.shields.io/codecov/c/github/so11y/fake-css" alt="codecov">
+    <img src="https://github.com/so11y/fake-css/actions/workflows/main.yml/badge.svg" alt="test">
   </p>
 </div>
 
