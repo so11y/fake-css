@@ -23,7 +23,7 @@ jobs:
         id: cache
         uses: actions/cache@v1
         with:
-          path: node_modules
+          path: packages/fake-css/node_modules
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
 
       - name: npm i
