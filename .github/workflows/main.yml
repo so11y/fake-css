@@ -38,4 +38,4 @@ jobs:
           with:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: unittests
-           run: cd packages/fake-css
+        run: cd packages/fake-css
