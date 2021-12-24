@@ -27,7 +27,6 @@ jobs:
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
 
       - name: npm i
-
         run: cd packages/fake-css && npm i
 
       - name: test
