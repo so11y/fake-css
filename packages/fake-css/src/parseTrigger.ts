@@ -39,7 +39,7 @@ export const converTo = {
 		return v;
 	}
 };
-
+/* istanbul ignore next */
 export const crateClassRule = () => {
 	if (__TEST__) {
 		const JSTStyleDom = document.createElement('style');

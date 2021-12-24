@@ -38,12 +38,16 @@ const parsingGraph: ParsingGraph = () => {
 		addParsingMapItem(key: string, value: ParsingMapTreeValue) {
 			Reflect.set(mapGraph, key, value);
 		},
+		/* 这个版本还用不到这里的代码,先忽略 */
+		/* istanbul ignore next */
 		removeParsingMapItem(key: string) {
 			Reflect.deleteProperty(mapGraph, key);
 		},
 		getGraphRef() {
 			return mapRef;
 		},
+		/* 这个版本还用不到这里的代码,先忽略 */
+		/* istanbul ignore next */
 		setParsingMapItem(key: string, value: ParsingMapTreeValue) {
 			if (Reflect.has(mapGraph, key)) {
 				this.addParsingMapItem(key, value);
