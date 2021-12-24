@@ -110,6 +110,7 @@ export const defineModule = (moduleId: string, define: RegisterSetUp) => {
 					converTo['class'](ParsingMapModule, key!, JITSheet)
 				);
 			}
+			/* istanbul ignore next */
 			console.warn('now platform no support jitClass you can use style !');
 		},
 		() => proxyJit(converTo['style'])

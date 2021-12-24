@@ -50,7 +50,8 @@
         "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-typescript2": "^0.30.0",
         "typescript": "^4.5.2",
-        "vue": "^3.2.16"
+        "vue": "^3.2.16",
+        "@vue/test-utils": "^2.0.0-rc.17"
     },
     "homepage": "https://github.com/so11y/fake-css",
     "repository": {

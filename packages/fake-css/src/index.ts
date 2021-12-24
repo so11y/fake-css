@@ -59,5 +59,3 @@ export const fekeCss = () => {
 		}
 	};
 };
-
-export const good = 1;

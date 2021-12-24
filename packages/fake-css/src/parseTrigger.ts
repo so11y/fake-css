@@ -16,6 +16,7 @@ export const genClassToString = (v: ParsingMapModule) => {
 
 export const converTo = {
 	class(v: ParsingMapModule, key: string, sheet: CSSStyleSheet) {
+		/* istanbul ignore next */
 		const isHave = Array.from(sheet.cssRules).findIndex((v) => {
 			const startWithClassName = (v as CSSStyleRule).selectorText;
 			return startWithClassName === `.${key}`;

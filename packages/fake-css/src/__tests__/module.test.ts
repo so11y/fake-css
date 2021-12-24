@@ -3,7 +3,12 @@ import { defineModule, getRegisterModule, patch } from '../module';
 describe('module file', () => {
 	const [useChildClass, useChildStyle] = defineModule('child', {
 		setup(v) {
-			v.register('pt', 'padding-top')
+			v.register('child_nice', {
+				parse() {
+					return { 'font-size': '10px' };
+				}
+			})
+				.register('pt', 'padding-top')
 				.register('mb', 'margin-bottom')
 				.register('pt_mb', {
 					chunk(ref) {
@@ -13,6 +18,7 @@ describe('module file', () => {
 		}
 	});
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [useGoodClass, useGoodStyle] = defineModule('good', {
 		setup(v) {
 			v.register('pr', 'padding-right')
@@ -25,6 +31,7 @@ describe('module file', () => {
 		}
 	});
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [useGood1Class, useGood1Style] = defineModule('good1', {
 		setup(v) {
 			v.register('bg', {
@@ -48,6 +55,7 @@ describe('module file', () => {
 	test('module style ', () => {
 		const style = useChildStyle();
 		expect(style.pt_70).toEqual({ 'padding-top': '70px' });
+		expect(style.child_nice).toEqual({ 'font-size': '10px' });
 	});
 	test('created module', () => {
 		const moduleMap = getRegisterModule();
