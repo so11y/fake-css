@@ -1,6 +1,6 @@
 {
     "name": "fake-css",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "fake-css is javascript runtime css framework",
     "author": {
         "name": "zrrz",
@@ -9,9 +9,25 @@
     "main": "dist/fake-css.esm-browser.js",
     "types": "dist/fakeCss.d.ts",
     "scripts": {
-        "test":"jest --watchAll",
+        "test": "jest --watchAll",
         "build": "rollup --config",
-        "lint:fix": "eslint --fix"
+        "lint:fix": "eslint --fix",
+        "coverage": "jest --coverage",
+    },
+    "exports": {
+        ".": {
+            "browser": "./dist/fake-css.esm-browser.js",
+            "node": {
+                "import": {
+                    "production": "./dist/pinia.prod.js",
+                    "development": "./dist/fake-css.esm-browser.js",
+                    "default": "./dist/fake-css.esm-browser.js"
+                }
+            },
+            "import": "./dist/fake-css.esm-browser.js"
+        },
+        "./package.json": "./package.json",
+        "./dist/*": "./dist/*"
     },
     "files": [
         "dist/*.js",
@@ -19,6 +35,8 @@
     ],
     "license": "MIT",
     "devDependencies": {
+        "@rollup/plugin-replace": "^3.0.0",
+        "@sucrase/jest-plugin": "^2.2.0",
         "@types/jest": "^27.0.3",
         "@typescript-eslint/eslint-plugin": "^5.3.1",
         "@typescript-eslint/parser": "^5.3.1",
@@ -29,10 +47,10 @@
         "jest": "^27.4.4",
         "prettier": "^2.4.1",
         "rollup": "^2.59.0",
+        "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-typescript2": "^0.30.0",
         "typescript": "^4.5.2",
-        "vue": "^3.2.16",
-        "@sucrase/jest-plugin": "^2.2.0"
+        "vue": "^3.2.16"
     },
     "homepage": "https://github.com/so11y/fake-css",
     "repository": {
