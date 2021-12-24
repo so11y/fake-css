@@ -17,6 +17,7 @@ export const isCustomChunk = (key: unknown): key is CustomChunk => {
 	return isObject(key) && key.chunk;
 };
 
+/* istanbul ignore next */
 export const toRawMapTree = <T extends { _toRaw?: any }>(key: T): T => {
 	return key._toRaw;
 };
