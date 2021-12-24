@@ -15,6 +15,7 @@ function runnerInstall(cwd) {
 }
 
 function run() {
+    runnerInstall(ContentCwd)
     runnerInstall(FakeCssCwd),
     runnerInstall(PlaygroundCwd)
 }
