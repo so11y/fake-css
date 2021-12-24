@@ -1,3 +1,4 @@
+import { toRaw } from 'vue';
 import { converToGraphValue, parseTrigger } from '../parseTrigger';
 import { proxyGraph } from '../parsingGraph';
 
@@ -58,12 +59,31 @@ describe('shared file parsingGraph', () => {
 		expect(getRef.good).toBe(getRef.good);
 	});
 
-	test('test set chunk ', () => {
+	test('test set chunk object', () => {
 		const getRef = proxy();
 		const getRawRef = rawRef();
 		getRef.good = {
 			'padding-top': '20px'
 		};
 		expect(getRef.good).toBe(getRawRef.good);
+	});
+
+	test('test set chunk Array', () => {
+		const getRef = proxy();
+		getRef.good = [{ 'padding-top': '20px' }] as any;
+		expect(getRef.good).toEqual({ 'padding-top': '20px' });
+	});
+
+	test('test get undefined', () => {
+		const getRef = proxy();
+		const v = Symbol('test');
+		expect(getRef[v as any]).toBeUndefined();
+	});
+
+	test('test get _toRaw', () => {
+		const getRef = proxy();
+		const getRawRef = rawRef();
+
+		expect(getRef._toRaw).toBe(toRaw(getRawRef));
 	});
 });

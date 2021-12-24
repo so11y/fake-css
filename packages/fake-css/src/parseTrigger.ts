@@ -20,6 +20,7 @@ export const converTo = {
 			const startWithClassName = (v as CSSStyleRule).selectorText;
 			return startWithClassName === `.${key}`;
 		});
+		/* istanbul ignore next */
 		if (isHave === -1) {
 			const classRule = genClassToString(v);
 			sheet.insertRule(`.${key}{${classRule}}`);
