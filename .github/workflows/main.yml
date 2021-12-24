@@ -35,7 +35,7 @@ jobs:
 
       - name: Codecov
           uses: codecov/codecov-action@v2
-          run: cd packages/fake-css
           with:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: unittests
+           run: cd packages/fake-css
