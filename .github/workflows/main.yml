@@ -32,3 +32,10 @@ jobs:
 
       - name: test
         run: cd packages/fake-css && npx jest && npx jest --coverage
+
+      - name: Codecov
+          uses: codecov/codecov-action@v2
+          run: cd packages/fake-css
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            flags: unittests
