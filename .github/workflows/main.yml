@@ -28,7 +28,7 @@ jobs:
 
       - name: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        run: cd packages & cd fake-css & npm i
+        run: cd packages/fake-css && npm i
 
       - name: test
         run: npx jest & npx jest --coverage
