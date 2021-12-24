@@ -42,7 +42,6 @@ yarn add fake-css
 4. 模块化定义,变相scoped
 5. 高度自定义解析方式
 6. 支持Typescript
-7. 高测试覆盖率
 
 ### 阶段
 
