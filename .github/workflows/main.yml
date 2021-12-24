@@ -31,4 +31,4 @@ jobs:
         run: cd packages & cd fake-css & npm i
 
       - name: test
-        run: npx jest & npm run coverage
+        run: npx jest & npx jest --coverage
