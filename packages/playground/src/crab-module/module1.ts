@@ -1,4 +1,4 @@
-import { defineModule } from "../../../fake-css/src/fakeCss"
+import { defineModule } from "fake-css"
 
 export default defineModule("user", {
     setup(v) {
