@@ -1,6 +1,6 @@
 {
     "name": "fake-css",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "fake-css is javascript runtime css framework",
     "author": {
         "name": "zrrz",
@@ -18,7 +18,7 @@
             "browser": "./dist/fake-css.esm-browser.js",
             "node": {
                 "import": {
-                    "production": "./dist/pinia.prod.js",
+                    "production": "./dist/fake-css.prod.js",
                     "development": "./dist/fake-css.esm-browser.js",
                     "default": "./dist/fake-css.esm-browser.js"
                 }
