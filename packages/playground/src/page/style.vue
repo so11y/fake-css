@@ -1,13 +1,25 @@
 <script  lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, ref } from "vue";
+import { useCounter, pp } from "../counter";
 export default defineComponent({
   components: {},
+  setup() {
+    const ppx = ref("ppx");
+    const v = useCounter();
+    return {
+      v,
+      pp,
+      ppx
+    };
+  },
 });
 </script>
 
 <template>
   <div :style="[style.mt_30]">
+    NN:{{ v.n }}
+    pp:{{ pp }}
+    ppx:{{ ppx }}
     <div>
       <div>you can use inside global register arg front style</div>
       <div>can open F12 see</div>

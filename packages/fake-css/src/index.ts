@@ -53,7 +53,7 @@ export const fekeCss = () => {
 	);
 
 	return {
-		install(app: App) {
+		install: (app: App) => {
 			app.config.globalProperties.style = useGlobalStyle();
 			app.config.globalProperties.css = useGlobalClass();
 		}
