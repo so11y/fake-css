@@ -23,7 +23,7 @@
 
 ### 在线体验
 
-点击 [stackblitz](https://vitest.dev/](https://stackblitz.com/edit/vue-z4jhgv?file=src/App.vue)).
+点击 [stackblitz](https://stackblitz.com/edit/vue-z4jhgv?file=src/App.vue).
 
 ### 下载
 
